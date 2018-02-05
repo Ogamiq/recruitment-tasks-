@@ -2,16 +2,11 @@ import re
 
 def find_url(log):
     #finds an url inside a line with a log and returns it
-    #when log isn't matching given pattern, returns a string 'not found'
-
     pattern  = "GET http://(.+) HTTP"
     match = re.search(pattern,log)
 
     if match:
         return match.group(1)
-    else:
-        return 'not found'
-
 
 def strip_url(url):
     #stripes an url by searching for the last question mark, removing it and everything after it
@@ -41,8 +36,12 @@ logs = ["10.4.180.222 [28/Jan/2018:10:02:32 +0100] GET http://clearcode.cc/ HTTP
 
 
 urls = []
+invalid_log_counts = 0
 for log in logs:
-    urls.append(find_url(log))
+    if(find_url(log)):
+        urls.append(find_url(log))
+    else:
+        invalid_log_counts += 1
 
 
 stripped_urls = []
@@ -57,8 +56,9 @@ for stripped_url in stripped_urls:
     else:
         stripped_urls_dict[stripped_url] += 1
 
-for key in stripped_urls_dict:
-    print('{},{}'.format(key,stripped_urls_dict[key]))
+for k, v in sorted(stripped_urls_dict.iteritems(), key=lambda(k,v):(-v,k)):
+    print('"{}",{}'.format(k,v))
+
 
 
 
