@@ -1,18 +1,28 @@
 import re
 
 def find_url(log):
+    #finds an url inside a line with a log and returns it
+    #when log isn't matching given pattern, returns a string 'not found'
+
     pattern  = "GET http://(.+) HTTP"
     match = re.search(pattern,log)
 
     if match:
         return match.group(1)
     else:
-        print("not found")
+        return 'not found'
 
 
 def strip_url(url):
-    last_question_mark_pos = url.rfind('?')
-    stripped_url = url[:last_question_mark_pos]
+    #stripes an url by searching for the last question mark, removing it and everything after it
+    #removes the last slash mark when it exists in a striped url
+
+    if url.rfind('?') != -1:
+        #means that question mark exist in a given url
+        last_question_mark_pos = url.rfind('?')
+        stripped_url = url[:last_question_mark_pos]
+    else:
+        stripped_url = url
 
     if(stripped_url[-1] == '/'):
         stripped_url = stripped_url[:-1]
@@ -39,9 +49,18 @@ stripped_urls = []
 for url in urls:
     stripped_urls.append(strip_url(url))
 
-#test
-print(urls)
-print(stripped_urls)
+
+stripped_urls_dict = {}
+for stripped_url in stripped_urls:
+    if stripped_url not in stripped_urls_dict.keys():
+        stripped_urls_dict[stripped_url] = 1
+    else:
+        stripped_urls_dict[stripped_url] += 1
+
+for key in stripped_urls_dict:
+    print('{},{}'.format(key,stripped_urls_dict[key]))
+
+
 
 
 
