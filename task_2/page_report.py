@@ -1,3 +1,7 @@
+#version of python: 2.7
+#author: Milosz Ogaza, email: miloszogaza@gmail.com
+
+#!/usr/bin/python
 import re
 import sys
 
@@ -55,6 +59,10 @@ for stripped_url in stripped_urls:
 
 for k, v in sorted(stripped_urls_dict.iteritems(), key=lambda(k,v):(-v,k)):
     print('"{}",{}'.format(k,v))
+
+
+if(invalid_log_counts > 1):
+    sys.stderr.write('"Invalid log lines",{} \n'.format(invalid_log_counts - 1))
 
 
 
