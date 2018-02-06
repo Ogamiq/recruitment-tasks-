@@ -1,4 +1,4 @@
-# Project Title 
+# Page report and hack powers! 
 Solutions for the set of recruitment tasks from the Clearcode company.
 
 ## Project description
