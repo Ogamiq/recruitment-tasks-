@@ -7,11 +7,11 @@ import sys
 
 def find_url(log):
     #finds an url inside a line with a log and returns it
-    pattern  = "GET https?://(.+) HTTP"
+    pattern  = "(GET|POST) https?://(.+) HTTP"
     match = re.search(pattern,log)
 
     if match:
-        return match.group(1)
+        return match.group(2)
 
 def strip_url(url):
     #stripes an url by searching for the last question mark, removing it and everything after it
